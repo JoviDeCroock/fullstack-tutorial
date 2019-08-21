@@ -21,9 +21,8 @@ export const LAUNCH_TILE_DATA = gql`
 `;
 
 export const GET_LAUNCHES = gql`
-  query GetLaunchList($after: String) {
-    launches(after: $after) {
-      cursor
+  query GetLaunchList($from: Int) {
+    launches(from: $from) {
       hasMore
       launches {
         ...LaunchTile
@@ -34,8 +33,10 @@ export const GET_LAUNCHES = gql`
 `;
 
 export default function Launches() {
+  const [from, setFrom] = React.useState(0)
   const [{ fetching, error, data }] = useQuery({
-    query: GET_LAUNCHES
+    query: GET_LAUNCHES,
+    variables: { from },
   });
   if (fetching) return <Loading />;
   if (error) return <p>ERROR</p>;
@@ -52,7 +53,7 @@ export default function Launches() {
         data.launches.hasMore && (
           <Button
             onClick={() => {
-              /* TODO: fetch more */
+              setFrom(from + 20);
             }}
           >
             Load More
