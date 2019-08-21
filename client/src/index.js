@@ -5,24 +5,44 @@ import { createClient, Provider, dedupExchange, fetchExchange } from 'urql';
 import { cacheExchange } from '@urql/exchange-graphcache';
 
 import Pages from './pages';
-// import Login from './pages/login';
-import injectStyles from './styles';
+import Login from './pages/login';
+import GlobalStyles from './styles';
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
 const client = new createClient({
-  url: 'http://localhost:4000/graphql',
-  exchanges: [
-    dedupExchange,
-    cacheExchange({}),
-    fetchExchange,
-  ]
+  exchanges: [dedupExchange, cacheExchange({}), fetchExchange],
+  fetchOptions: () => ({
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  }),
+  url: "http://localhost:4000/graphql"
 });
 
-injectStyles();
+export const AuthContext = React.createContext();
+
+const App = () => {
+  const token = localStorage.getItem("token");
+  const [authState, setAuthState] = React.useState({
+    isLoggedIn: !!token,
+    token: token || ''
+  });
+  return (
+    <React.Fragment>
+      <GlobalStyles />
+      <AuthContext.Provider value={{ ...authState, setAuthState }}>
+        <Provider value={client}>
+          {authState.isLoggedIn ? <Pages /> : <Login />}
+        </Provider>
+      </AuthContext.Provider>
+    </React.Fragment>
+  );
+}
+
+
+
 ReactDOM.render(
-  <Provider value={client}>
-    <Pages />
-  </Provider>,
+  <App />,
   document.getElementById('root'),
 );

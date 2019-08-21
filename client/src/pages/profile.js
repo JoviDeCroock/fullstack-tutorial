@@ -19,11 +19,12 @@ export const GET_MY_TRIPS = gql`
 `;
 
 export default function Profile() {
-  const { data, loading, error } = useQuery({
+  const [{ data, fetching, error }] = useQuery({
     query: GET_MY_TRIPS,
-    fetchPolicy: "network-only"
+    requestPolicy: "network-only"
   });
-  if (loading) return <Loading />;
+
+  if (fetching) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
 
   return (

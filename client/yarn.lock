@@ -1346,10 +1346,10 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@urql/exchange-graphcache@1.0.0-beta.1":
-  version "1.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@urql/exchange-graphcache/-/exchange-graphcache-1.0.0-beta.1.tgz#dbf5fbd3d2db21e1553dd93569299a735bf3c7ca"
-  integrity sha512-NChqD3Fp8j8VWK0NYE9NChaOpjSaEaHAoUS+cDbOqSCd1rSmBO91GOI+HeUG1hgRLjU15lprXxRB6pFy6Itlsw==
+"@urql/exchange-graphcache@1.0.0-beta.2":
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@urql/exchange-graphcache/-/exchange-graphcache-1.0.0-beta.2.tgz#0a62986313e561ac0f6dc20cbf43dd01e62977a4"
+  integrity sha512-Ae4BASyMA4kQVAiFT87rn0qdwGWBtZnm3v7B+6DeuxrVKTcWfKQ8x7qaKbjXiL/NAmkBQjVMxqzgSwW16h8eJw==
   dependencies:
     fast-json-stable-stringify "^2.0.0"
     pessimism "^1.0.1"
