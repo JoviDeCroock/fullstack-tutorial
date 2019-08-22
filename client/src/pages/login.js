@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 import { LoginForm, Loading } from '../components';
 import { AuthContext } from '..';
+import usePreviousValue from './usePreviousValue';
 
 export const LOGIN_USER = gql`
   mutation login($email: String!) {
@@ -12,14 +13,6 @@ export const LOGIN_USER = gql`
     }
   }
 `;
-
-const usePreviousValue = (track) => {
-  const ref = React.useRef(track);
-  React.useEffect(() => {
-    ref.current = track;
-  });
-  return ref.current;
-}
 
 export default function Login() {
   const [{ data, fetching, error }, login] = useMutation(LOGIN_USER);

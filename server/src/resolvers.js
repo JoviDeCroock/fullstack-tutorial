@@ -8,7 +8,7 @@ module.exports = {
       allLaunches.reverse();
 
       return {
-        launches: allLaunches.slice(from, from + limit + 1),
+        launches: allLaunches.slice(from, from + limit),
         hasMore: allLaunches.length > from
       };
     },

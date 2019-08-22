@@ -11,11 +11,15 @@ import GlobalStyles from './styles';
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
 const client = new createClient({
-  exchanges: [dedupExchange, cacheExchange({}), fetchExchange],
+  exchanges: [
+    dedupExchange,
+    cacheExchange(),
+    fetchExchange
+  ],
   fetchOptions: () => ({
     headers: {
-      authorization: localStorage.getItem("token"),
-    },
+      authorization: localStorage.getItem("token")
+    }
   }),
   url: "http://localhost:4000/graphql"
 });

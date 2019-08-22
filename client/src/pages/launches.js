@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import { useQuery } from 'urql';
 import gql from 'graphql-tag';
 
-import { LaunchTile, Header, Button, Loading } from '../components';
+import { LaunchTile, Header, Button } from '../components';
+import usePagination from './usePagination';
 
 export const LAUNCH_TILE_DATA = gql`
   fragment LaunchTile on Launch {
@@ -33,29 +33,19 @@ export const GET_LAUNCHES = gql`
 `;
 
 export default function Launches() {
-  const [from, setFrom] = React.useState(0)
-  const [{ fetching, error, data }] = useQuery({
-    query: GET_LAUNCHES,
-    variables: { from },
-  });
-  if (fetching) return <Loading />;
+  const [{ error, data }, fetchMore, hasMore] = usePagination(GET_LAUNCHES);
+
   if (error) return <p>ERROR</p>;
 
   return (
     <Fragment>
       <Header />
-      {data.launches &&
-        data.launches.launches &&
-        data.launches.launches.map(launch => (
+      {data &&
+        data.map(launch => (
           <LaunchTile key={launch.id} launch={launch} />
         ))}
-      {data.launches &&
-        data.launches.hasMore && (
-          <Button
-            onClick={() => {
-              setFrom(from + 20);
-            }}
-          >
+      {hasMore && (
+          <Button onClick={fetchMore}>
             Load More
           </Button>
         )}
